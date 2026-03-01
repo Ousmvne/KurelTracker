@@ -4,6 +4,11 @@ import { safeQuery } from "../lib/utils";
 
 export function useGroup(group, setGroup, showToast) {
   const updateGroup = useCallback(async (updates) => {
+    if (!group?.id) {
+      showToast("Erreur : groupe introuvable");
+      return;
+    }
+
     const { data, error } = await safeQuery(() =>
       supabase.from("groups").update(updates).eq("id", group.id).select().single()
     );

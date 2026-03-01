@@ -16,48 +16,59 @@ export function useAuth() {
 
   const loadUserData = useCallback(async (u) => {
     setLoading(true);
+    setError("");
 
-    // Check admin
-    const { data: adminGroup } = await supabase
-      .from("groups").select("*").eq("admin_id", u.id).maybeSingle();
-    if (adminGroup) {
+    try {
+      // Check admin
+      const { data: adminGroup, error: adminErr } = await supabase
+        .from("groups").select("*").eq("admin_id", u.id).maybeSingle();
+      if (adminErr) throw new Error(adminErr.message);
+      if (adminGroup) {
+        setRole("admin");
+        setGroup(adminGroup);
+        setLoading(false);
+        return;
+      }
+
+      // Check member (already linked)
+      const { data: memberRecord, error: memberErr } = await supabase
+        .from("members").select("*, groups(*)").eq("user_id", u.id).maybeSingle();
+      if (memberErr) throw new Error(memberErr.message);
+      if (memberRecord) {
+        setRole("member");
+        setMyMember(memberRecord);
+        setGroup(memberRecord.groups);
+        setLoading(false);
+        return;
+      }
+
+      // Check if email matches an unlinked member
+      const { data: matchingMember, error: matchErr } = await supabase
+        .from("members").select("*, groups(*)").eq("email", u.email).is("user_id", null).maybeSingle();
+      if (matchErr) throw new Error(matchErr.message);
+      if (matchingMember) {
+        await supabase.from("members").update({ user_id: u.id }).eq("id", matchingMember.id);
+        setRole("member");
+        setMyMember({ ...matchingMember, user_id: u.id });
+        setGroup(matchingMember.groups);
+        setLoading(false);
+        return;
+      }
+
+      // New user → becomes admin of a new group
+      const { data: newGroup, error: groupErr } = await supabase
+        .from("groups")
+        .insert({ name: "Mon Kurel", start_date: today(), admin_id: u.id })
+        .select().single();
+      if (groupErr) throw new Error(groupErr.message);
       setRole("admin");
-      setGroup(adminGroup);
+      setGroup(newGroup);
+    } catch (err) {
+      console.error("[useAuth] loadUserData failed:", err.message);
+      setError("Erreur de connexion au serveur. Vérifiez que votre projet Supabase est actif.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // Check member (already linked)
-    const { data: memberRecord } = await supabase
-      .from("members").select("*, groups(*)").eq("user_id", u.id).maybeSingle();
-    if (memberRecord) {
-      setRole("member");
-      setMyMember(memberRecord);
-      setGroup(memberRecord.groups);
-      setLoading(false);
-      return;
-    }
-
-    // Check if email matches an unlinked member
-    const { data: matchingMember } = await supabase
-      .from("members").select("*, groups(*)").eq("email", u.email).is("user_id", null).maybeSingle();
-    if (matchingMember) {
-      await supabase.from("members").update({ user_id: u.id }).eq("id", matchingMember.id);
-      setRole("member");
-      setMyMember({ ...matchingMember, user_id: u.id });
-      setGroup(matchingMember.groups);
-      setLoading(false);
-      return;
-    }
-
-    // New user → becomes admin of a new group
-    const { data: newGroup } = await supabase
-      .from("groups")
-      .insert({ name: "Mon Kurel", start_date: today(), admin_id: u.id })
-      .select().single();
-    setRole("admin");
-    setGroup(newGroup);
-    setLoading(false);
   }, []);
 
   useEffect(() => {

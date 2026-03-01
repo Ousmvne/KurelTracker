@@ -6,8 +6,10 @@ import SessionCard from "../components/sessions/SessionCard";
 import { fmtDate } from "../lib/utils";
 
 export default function HomePage() {
-  const { group, members, songs, sessions, attendance, generateWhatsAppSummary, showToast } = useGroupContext();
-  const { logout } = useAuthContext();
+  const { group, members, songs, sessions, attendance, generateWhatsAppSummary, showToast, error: groupError } = useGroupContext();
+  const { logout, error: authError } = useAuthContext();
+
+  const serverError = authError || groupError;
 
   const handleWhatsApp = () => {
     generateWhatsAppSummary();
@@ -16,9 +18,15 @@ export default function HomePage() {
 
   return (
     <div className="p-5 pb-20">
+      {serverError && (
+        <div className="bg-red-100 text-red-600 rounded-xl px-4 py-3 text-[13px] mb-4 font-semibold text-left border-l-4 border-red-600">
+          {serverError}
+        </div>
+      )}
+
       <HeroCard
         icon="🎵"
-        title={group?.name}
+        title={group?.name || "Mon Kurel"}
         subtitle={`Depuis le ${fmtDate(group?.start_date)} • ${members.length} membres • ${sessions.length} séances`}
       />
 
