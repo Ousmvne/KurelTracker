@@ -24,9 +24,17 @@ export function useStats(members, songs, sessions, attendance, group) {
   }, [sessions, songs]);
 
   const memberRanking = useMemo(() => {
-    return members
+    const sorted = members
       .map((m) => ({ ...m, stats: getMemberStats(m.id) }))
       .sort((a, b) => b.stats.totalValid - a.stats.totalValid);
+
+    let rank = 1;
+    return sorted.map((m, i) => {
+      if (i > 0 && m.stats.totalValid < sorted[i - 1].stats.totalValid) {
+        rank = i + 1;
+      }
+      return { ...m, rank };
+    });
   }, [members, getMemberStats]);
 
   const generateWhatsAppSummary = useCallback(() => {

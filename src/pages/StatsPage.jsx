@@ -26,7 +26,7 @@ export default function StatsPage() {
           return (
             <div key={m.id} className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-3.5 py-3">
               <div className="text-[22px] w-9 text-center shrink-0">
-                {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i + 1}.`}
+                {m.rank === 1 ? "🥇" : m.rank === 2 ? "🥈" : m.rank === 3 ? "🥉" : `${m.rank}.`}
               </div>
               <div className="flex-1">
                 <div className="text-sm font-semibold text-gray-800">{m.name}</div>
