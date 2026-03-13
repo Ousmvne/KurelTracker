@@ -24,7 +24,7 @@ export function GroupProvider({ children }) {
   const { addSong, removeSong } = useSongs(group?.id, setSongs, sessions, setSessions, setAttendance, showToast);
   const { createSession, deleteSession, toggleAttendance } = useSessions(group?.id, members, setSessions, setAttendance, showToast);
   const { updateGroup } = useGroup(group, setGroup, showToast);
-  const { getMemberStats, getSongStats, memberRanking, attendanceMap, generateWhatsAppSummary } = useStats(members, songs, sessions, attendance, group);
+  const { getMemberStats, getSongStats, getSongDetailedStats, memberRanking, attendanceMap, generateWhatsAppSummary } = useStats(members, songs, sessions, attendance, group);
 
   const value = {
     group, members, songs, sessions, attendance,
@@ -33,7 +33,7 @@ export function GroupProvider({ children }) {
     addSong, removeSong,
     createSession, deleteSession, toggleAttendance,
     updateGroup,
-    getMemberStats, getSongStats, memberRanking, attendanceMap,
+    getMemberStats, getSongStats, getSongDetailedStats, memberRanking, attendanceMap,
     generateWhatsAppSummary,
     toast, showToast,
   };

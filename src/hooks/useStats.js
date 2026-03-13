@@ -64,5 +64,49 @@ export function useStats(members, songs, sessions, attendance, group) {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
   }, [group, members, songs, sessions, attendanceMap, getMemberStats, getSongStats]);
 
-  return { getMemberStats, getSongStats, memberRanking, attendanceMap, generateWhatsAppSummary };
+  const getSongDetailedStats = useCallback((songId) => {
+    const song = songs.find((s) => s.id === songId);
+    const songSessions = sessions
+      .filter((s) => s.song_id === songId)
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const totalSessions = songSessions.length;
+    const sessionIds = new Set(songSessions.map((s) => s.id));
+
+    const ranking = members
+      .map((m) => {
+        const songAttendance = attendance.filter(
+          (a) => a.member_id === m.id && sessionIds.has(a.session_id)
+        );
+        const present = songAttendance.filter((a) => a.status === "present").length;
+        const vocal = songAttendance.filter((a) => a.status === "vocal").length;
+        const valid = present + vocal;
+        return { ...m, stats: { totalPresent: present, totalVocal: vocal, totalValid: valid, totalSessions } };
+      })
+      .sort((a, b) => b.stats.totalValid - a.stats.totalValid);
+
+    let rank = 1;
+    const ranked = ranking.map((m, i) => {
+      if (i > 0 && m.stats.totalValid < ranking[i - 1].stats.totalValid) rank = i + 1;
+      return { ...m, rank };
+    });
+
+    const sessionsWithStats = songSessions.map((s) => {
+      const sa = attendance.filter((a) => a.session_id === s.id);
+      const present = sa.filter((a) => a.status === "present").length;
+      const vocal = sa.filter((a) => a.status === "vocal").length;
+      const absent = sa.filter((a) => a.status === "absent").length;
+      return { ...s, present, vocal, absent };
+    });
+
+    return {
+      song,
+      completed: totalSessions,
+      target: song?.target_reps || 10,
+      ranking: ranked,
+      sessions: sessionsWithStats,
+    };
+  }, [members, songs, sessions, attendance]);
+
+  return { getMemberStats, getSongStats, getSongDetailedStats, memberRanking, attendanceMap, generateWhatsAppSummary };
 }
