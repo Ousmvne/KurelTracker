@@ -3,6 +3,7 @@ import { useGroupContext } from "../contexts/GroupContext";
 import HeroCard from "../components/ui/HeroCard";
 import ProgressBar from "../components/ui/ProgressBar";
 import EmptyState from "../components/ui/EmptyState";
+import SongAudioPlayer from "../components/ui/SongAudioPlayer";
 import { fmtDate, ATTENDANCE_CONFIG } from "../lib/utils";
 
 export default function MemberDashboardPage() {
@@ -38,6 +39,20 @@ export default function MemberDashboardPage() {
       <p className="text-center mb-6 text-sm text-gray-500">
         {pct >= 80 ? "Excellent ! Continue comme ça 💪" : pct >= 50 ? "Pas mal, mais tu peux mieux faire !" : "Il faut venir plus souvent aux répétitions !"}
       </p>
+
+      {songs.filter((s) => s.audio_url).length > 0 && (
+        <>
+          <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">🎵 Morceaux à réviser</h3>
+          <div className="flex flex-col gap-2 mb-6">
+            {songs.filter((s) => s.audio_url).map((song) => (
+              <div key={song.id} className="bg-white border border-gray-200 rounded-xl px-3.5 py-3">
+                <div className="text-sm font-semibold text-gray-800">{song.name}</div>
+                <SongAudioPlayer audioUrl={song.audio_url} />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Historique des séances</h3>
       <div className="flex flex-col gap-2">

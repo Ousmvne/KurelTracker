@@ -21,7 +21,7 @@ export function GroupProvider({ children }) {
   } = useGroupData(group?.id);
 
   const { addMember, removeMember } = useMembers(group?.id, setMembers, setAttendance, showToast);
-  const { addSong, removeSong } = useSongs(group?.id, setSongs, sessions, setSessions, setAttendance, showToast);
+  const { addSong, removeSong, updateSongAudio, removeSongAudio } = useSongs(group?.id, setSongs, songs, sessions, setSessions, setAttendance, showToast);
   const { createSession, deleteSession, toggleAttendance } = useSessions(group?.id, members, setSessions, setAttendance, showToast);
   const { updateGroup } = useGroup(group, setGroup, showToast);
   const { getMemberStats, getSongStats, getSongDetailedStats, memberRanking, attendanceMap, generateWhatsAppSummary } = useStats(members, songs, sessions, attendance, group);
@@ -30,7 +30,7 @@ export function GroupProvider({ children }) {
     group, members, songs, sessions, attendance,
     loading, error, refetch,
     addMember, removeMember,
-    addSong, removeSong,
+    addSong, removeSong, updateSongAudio, removeSongAudio,
     createSession, deleteSession, toggleAttendance,
     updateGroup,
     getMemberStats, getSongStats, getSongDetailedStats, memberRanking, attendanceMap,
