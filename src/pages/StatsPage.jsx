@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useGroupContext } from "../contexts/GroupContext";
 import PageHeader from "../components/layout/PageHeader";
 import ProgressBar from "../components/ui/ProgressBar";
@@ -5,6 +6,7 @@ import EmptyState from "../components/ui/EmptyState";
 
 export default function StatsPage() {
   const { members, songs, sessions, memberRanking, getSongStats } = useGroupContext();
+  const navigate = useNavigate();
 
   if (members.length === 0 || sessions.length === 0) {
     return (
@@ -46,12 +48,17 @@ export default function StatsPage() {
           const s = getSongStats(song.id);
           const pct = s.target > 0 ? Math.round((s.completed / s.target) * 100) : 0;
           return (
-            <div key={song.id} className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-3.5 py-3">
+            <div
+              key={song.id}
+              className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-3.5 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={() => navigate(`/stats/song/${song.id}`)}
+            >
               <div className="flex-1">
                 <div className="text-sm font-semibold text-gray-800">{song.name}</div>
                 <ProgressBar percent={pct} />
                 <div className="text-[11px] text-gray-500 mt-1">{s.completed}/{s.target} ({pct}%)</div>
               </div>
+              <div className="text-gray-400 text-lg shrink-0">→</div>
             </div>
           );
         })}

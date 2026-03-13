@@ -11,6 +11,7 @@ import SongsPage from "../pages/SongsPage";
 import NewSessionPage from "../pages/NewSessionPage";
 import SessionPage from "../pages/SessionPage";
 import StatsPage from "../pages/StatsPage";
+import SongStatsPage from "../pages/SongStatsPage";
 import SettingsPage from "../pages/SettingsPage";
 import MemberDashboardPage from "../pages/MemberDashboardPage";
 
@@ -75,6 +76,7 @@ export const router = createBrowserRouter([
       { path: "new-session", element: <NewSessionPage /> },
       { path: "session/:sessionId", element: <SessionPage /> },
       { path: "stats", element: <StatsPage /> },
+      { path: "stats/song/:songId", element: <SongStatsPage /> },
       { path: "settings", element: <SettingsPage /> },
     ],
   },
