@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGroupContext } from "../contexts/GroupContext";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useTutorial } from "../contexts/TutorialContext";
 import PageHeader from "../components/layout/PageHeader";
 import ConfirmDialog from "../components/ui/ConfirmDialog";
 import { fmtDate } from "../lib/utils";
@@ -8,6 +9,7 @@ import { fmtDate } from "../lib/utils";
 export default function SettingsPage() {
   const { group, updateGroup, members, songs, sessions } = useGroupContext();
   const { user, logout } = useAuthContext();
+  const { replay } = useTutorial();
   const [name, setName] = useState(group?.name || "");
   const [startDate, setStartDate] = useState(group?.start_date || "");
   const [dirty, setDirty] = useState(false);
@@ -106,6 +108,14 @@ export default function SettingsPage() {
           {linkedMembers.length} membre{linkedMembers.length !== 1 ? "s" : ""} avec compte lié sur {members.length}
         </div>
       </div>
+
+      {/* Tutorial */}
+      <button
+        className="w-full bg-kurel-50 text-kurel-700 border border-kurel-200 rounded-xl p-3 text-sm font-semibold cursor-pointer font-sans mb-3 hover:bg-kurel-100 transition-colors"
+        onClick={replay}
+      >
+        🎓 Revoir le tutoriel
+      </button>
 
       {/* Logout */}
       <button

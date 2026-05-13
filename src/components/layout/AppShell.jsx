@@ -3,12 +3,15 @@ import Toast from "../ui/Toast";
 import BottomNav from "./BottomNav";
 import Sidebar from "./Sidebar";
 import LoadingScreen from "./LoadingScreen";
+import TutorialModal from "../ui/TutorialModal";
 import { useGroupContext } from "../../contexts/GroupContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { TutorialProvider, useTutorial } from "../../contexts/TutorialContext";
 
-export default function AppShell() {
+function AppShellInner() {
   const { toast, loading } = useGroupContext();
   const { role } = useAuthContext();
+  const { show, close } = useTutorial();
 
   if (loading) return <LoadingScreen />;
 
@@ -17,7 +20,6 @@ export default function AppShell() {
       {role === "admin" && <Sidebar />}
 
       <main className="flex-1 min-w-0">
-        {/* Mobile/tablet: centered card with shadow; Desktop: full-width, no card */}
         <div className="font-sans w-full max-w-[600px] min-h-screen mx-auto relative
                         shadow-[0_0_40px_rgba(0,0,0,0.08)]
                         sm:rounded-[20px] sm:min-h-[calc(100vh-48px)] sm:my-6
@@ -28,6 +30,15 @@ export default function AppShell() {
       </main>
 
       {role === "admin" && <BottomNav />}
+      {role === "admin" && show && <TutorialModal onClose={close} />}
     </div>
+  );
+}
+
+export default function AppShell() {
+  return (
+    <TutorialProvider>
+      <AppShellInner />
+    </TutorialProvider>
   );
 }
