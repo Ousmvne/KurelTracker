@@ -10,11 +10,11 @@ export default function MembersPage() {
   const [confirmAction, setConfirmAction] = useState(null);
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title={`👥 Membres (${members.length})`} />
       <MemberForm onAdd={addMember} />
 
-      <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {members.map((m, i) => (
           <div key={m.id} className="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-3.5 py-3">
             <div className="flex items-center gap-2.5">

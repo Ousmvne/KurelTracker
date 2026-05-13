@@ -27,7 +27,7 @@ export default function SettingsPage() {
   const linkedMembers = members.filter((m) => m.user_id);
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8 lg:max-w-2xl">
       <PageHeader title="⚙️ Paramètres" />
 
       {/* Group info summary */}

@@ -12,7 +12,7 @@ export default function SongStatsPage() {
 
   if (!data.song) {
     return (
-      <div className="p-5 pb-20">
+      <div className="p-5 pb-20 lg:p-8 lg:pb-8">
         <PageHeader title="Morceau introuvable" backTo="/stats" />
         <p className="text-gray-500 text-sm">Ce morceau n'existe pas ou a été supprimé.</p>
       </div>
@@ -22,7 +22,7 @@ export default function SongStatsPage() {
   const globalPct = data.target > 0 ? Math.round((data.completed / data.target) * 100) : 0;
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title={`🎵 ${data.song.name}`} backTo="/stats" />
 
       <div className="bg-white border border-gray-200 rounded-xl px-3.5 py-3 mb-6">
@@ -37,7 +37,7 @@ export default function SongStatsPage() {
       {data.ranking.length === 0 || data.completed === 0 ? (
         <EmptyState>Aucune session pour ce morceau.</EmptyState>
       ) : (
-        <div className="flex flex-col gap-2 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-6">
           {data.ranking.map((m) => {
             const pct = m.stats.totalSessions > 0
               ? Math.round((m.stats.totalValid / m.stats.totalSessions) * 100)

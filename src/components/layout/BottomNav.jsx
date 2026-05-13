@@ -12,7 +12,7 @@ export default function BottomNav() {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] bg-white/95 backdrop-blur-sm border-t border-gray-200 flex justify-around px-1 pt-2 pb-[max(env(safe-area-inset-bottom),8px)] z-50">
+    <nav className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] bg-white/95 backdrop-blur-sm border-t border-gray-200 flex justify-around px-1 pt-2 pb-[max(env(safe-area-inset-bottom),8px)] z-50">
       {NAV_ITEMS.map((item) => {
         const active = item.match(pathname);
         return (

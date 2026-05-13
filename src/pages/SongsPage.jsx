@@ -14,11 +14,11 @@ export default function SongsPage() {
   const [audioModalSong, setAudioModalSong] = useState(null);
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title={`🎶 Morceaux (${songs.length})`} />
       <SongForm onAdd={addSong} />
 
-      <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {songs.map((song) => {
           const s = getSongStats(song.id);
           const pct = s.target > 0 ? Math.round((s.completed / s.target) * 100) : 0;

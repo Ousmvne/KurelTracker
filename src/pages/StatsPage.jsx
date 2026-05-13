@@ -10,7 +10,7 @@ export default function StatsPage() {
 
   if (members.length === 0 || sessions.length === 0) {
     return (
-      <div className="p-5 pb-20">
+      <div className="p-5 pb-20 lg:p-8 lg:pb-8">
         <PageHeader title="📊 Statistiques" />
         <EmptyState>Pas encore de données.</EmptyState>
       </div>
@@ -18,11 +18,11 @@ export default function StatsPage() {
   }
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title="📊 Statistiques" />
 
       <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Classement membres</h3>
-      <div className="flex flex-col gap-2 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-6">
         {memberRanking.map((m, i) => {
           const pct = m.stats.totalSessions > 0 ? Math.round((m.stats.totalValid / m.stats.totalSessions) * 100) : 0;
           return (
@@ -43,7 +43,7 @@ export default function StatsPage() {
       </div>
 
       <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Avancement morceaux</h3>
-      <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {songs.map((song) => {
           const s = getSongStats(song.id);
           const pct = s.target > 0 ? Math.round((s.completed / s.target) * 100) : 0;

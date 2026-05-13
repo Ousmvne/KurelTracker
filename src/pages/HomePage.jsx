@@ -17,7 +17,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       {serverError && (
         <div className="bg-red-100 text-red-600 rounded-xl px-4 py-3 text-[13px] mb-4 font-semibold text-left border-l-4 border-red-600">
           {serverError}
@@ -30,7 +30,7 @@ export default function HomePage() {
         subtitle={`Depuis le ${fmtDate(group?.start_date)} • ${members.length} membres • ${sessions.length} séances`}
       />
 
-      <div className="grid grid-cols-2 gap-3 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         {[
           { to: "/members", icon: "👥", label: "Membres", count: members.length },
           { to: "/songs", icon: "🎶", label: "Morceaux", count: songs.length },
@@ -54,11 +54,13 @@ export default function HomePage() {
       {sessions.length > 0 && (
         <div className="mb-4">
           <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Séances récentes</h3>
+          <div className="lg:grid lg:grid-cols-2 lg:gap-3">
           {sessions.slice(-5).reverse().map((session) => {
             const song = songs.find((s) => s.id === session.song_id);
             const sa = attendance.filter((a) => a.session_id === session.id);
             return <SessionCard key={session.id} session={session} song={song} attendance={sa} />;
           })}
+          </div>
         </div>
       )}
 
@@ -69,7 +71,7 @@ export default function HomePage() {
         <span className="text-xl">📱</span> Partager sur WhatsApp
       </button>
 
-      <div className="flex justify-between mt-5">
+      <div className="flex justify-between mt-5 lg:hidden">
         <Link to="/settings" className="bg-transparent border-none text-gray-500 text-[13px] cursor-pointer font-sans no-underline hover:text-gray-700">
           ⚙️ Paramètres
         </Link>

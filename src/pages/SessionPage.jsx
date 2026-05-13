@@ -30,7 +30,7 @@ export default function SessionPage() {
   };
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title={`${song?.name || "Séance"} — ${fmtDate(session.date)}`} />
       <p className="text-gray-500 text-[13px] m-0 mb-3">Tapez pour changer : Absent → Présent → Vocal</p>
 
@@ -42,7 +42,7 @@ export default function SessionPage() {
         ))}
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {members.map((m, i) => {
           const att = attendance.find((a) => a.session_id === session.id && a.member_id === m.id);
           const status = att?.status || "absent";

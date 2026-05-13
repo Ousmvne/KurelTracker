@@ -21,10 +21,10 @@ export default function MemberDashboardPage() {
   const pct = totalSessions > 0 ? Math.round((totalValid / totalSessions) * 100) : 0;
 
   return (
-    <div className="p-5 pb-20">
+    <div className="p-5 pb-20 lg:p-8 lg:pb-8 lg:max-w-2xl lg:mx-auto">
       <HeroCard icon="👤" title={myMember.name} subtitle={group.name} />
 
-      <div className="grid grid-cols-2 gap-3 mb-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         {[
           { num: `${totalValid}/${totalSessions}`, label: "Présences" },
           { num: `${pct}%`, label: "Assiduité" },
