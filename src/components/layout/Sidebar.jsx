@@ -5,7 +5,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 const NAV_ITEMS = [
   { to: "/", icon: "🏠", label: "Accueil", match: (p) => p === "/" },
   { to: "/members", icon: "👥", label: "Membres", match: (p) => p.startsWith("/members") },
-  { to: "/songs", icon: "🎶", label: "Morceaux", match: (p) => p.startsWith("/songs") },
+  { to: "/songs", icon: "🎶", label: "Xasiidas", match: (p) => p.startsWith("/songs") },
   { to: "/new-session", icon: "📋", label: "Nouvelle Séance", match: (p) => p.startsWith("/new-session") || p.startsWith("/session") },
   { to: "/stats", icon: "📊", label: "Statistiques", match: (p) => p.startsWith("/stats") },
   { to: "/settings", icon: "⚙️", label: "Paramètres", match: (p) => p.startsWith("/settings") },

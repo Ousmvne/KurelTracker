@@ -33,7 +33,7 @@ export default function HomePage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         {[
           { to: "/members", icon: "👥", label: "Membres", count: members.length },
-          { to: "/songs", icon: "🎶", label: "Morceaux", count: songs.length },
+          { to: "/songs", icon: "🎶", label: "Xasiidas", count: songs.length },
           { to: "/new-session", icon: "📋", label: "Nouvelle Séance", count: "+" },
           { to: "/stats", icon: "📊", label: "Statistiques", count: "→" },
         ].map((item) => (

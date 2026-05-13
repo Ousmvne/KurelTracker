@@ -45,7 +45,7 @@ export default function MemberDashboardPage() {
 
       {songs.filter((s) => s.audio_url).length > 0 && (
         <>
-          <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">🎵 Morceaux à réviser</h3>
+          <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">🎵 Xasiidas à réviser</h3>
           <div className="flex flex-col gap-2 mb-6">
             {songs.filter((s) => s.audio_url).map((song) => (
               <div key={song.id} className="bg-white border border-gray-200 rounded-xl px-3.5 py-3">

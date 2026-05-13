@@ -14,7 +14,7 @@ export default function SongStatsPage() {
     return (
       <div className="p-5 pb-20 lg:p-8 lg:pb-8">
         <PageHeader title="Morceau introuvable" backTo="/stats" />
-        <p className="text-gray-500 text-sm">Ce morceau n'existe pas ou a été supprimé.</p>
+        <p className="text-gray-500 text-sm">Ce xasiida n'existe pas ou a été supprimé.</p>
       </div>
     );
   }
@@ -33,9 +33,9 @@ export default function SongStatsPage() {
         </div>
       </div>
 
-      <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Classement sur ce morceau</h3>
+      <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Classement sur ce xasiida</h3>
       {data.ranking.length === 0 || data.completed === 0 ? (
-        <EmptyState>Aucune session pour ce morceau.</EmptyState>
+        <EmptyState>Aucune session pour ce xasiida.</EmptyState>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-6">
           {data.ranking.map((m) => {

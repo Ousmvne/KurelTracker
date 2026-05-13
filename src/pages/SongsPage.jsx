@@ -15,7 +15,7 @@ export default function SongsPage() {
 
   return (
     <div className="p-5 pb-20 lg:p-8 lg:pb-8">
-      <PageHeader title={`🎶 Morceaux (${songs.length})`} />
+      <PageHeader title={`🎶 Xasiidas (${songs.length})`} />
       <SongForm onAdd={addSong} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
@@ -49,7 +49,7 @@ export default function SongsPage() {
             </div>
           );
         })}
-        {songs.length === 0 && <EmptyState>Aucun morceau.</EmptyState>}
+        {songs.length === 0 && <EmptyState>Aucun xasiida.</EmptyState>}
       </div>
 
       {confirmAction && (

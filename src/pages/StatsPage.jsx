@@ -42,7 +42,7 @@ export default function StatsPage() {
         })}
       </div>
 
-      <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Avancement morceaux</h3>
+      <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Avancement xasiidas</h3>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {songs.map((song) => {
           const s = getSongStats(song.id);

@@ -16,12 +16,12 @@ export default function NewSessionPage() {
       <div className="p-5 pb-20">
         <PageHeader title="📋 Nouvelle Séance" />
         <div className="text-center bg-white rounded-2xl p-6 text-gray-500 text-sm">
-          <p>Ajoutez d'abord un morceau.</p>
+          <p>Ajoutez d'abord un xasiida.</p>
           <button
             className="bg-kurel-600 text-white border-none rounded-xl px-5 py-2.5 text-sm font-semibold cursor-pointer mt-3 font-sans"
             onClick={() => navigate("/songs")}
           >
-            Ajouter un morceau
+            Ajouter un xasiida
           </button>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function NewSessionPage() {
   return (
     <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title="📋 Nouvelle Séance" />
-      <p className="text-gray-500 text-[13px] m-0 mb-3">Choisissez le morceau :</p>
+      <p className="text-gray-500 text-[13px] m-0 mb-3">Choisissez le xasiida :</p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {songs.map((song) => {
           const s = getSongStats(song.id);

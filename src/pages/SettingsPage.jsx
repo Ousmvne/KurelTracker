@@ -40,7 +40,7 @@ export default function SettingsPage() {
           </div>
           <div className="text-center">
             <div className="text-2xl font-extrabold text-kurel-800">{songs.length}</div>
-            <div className="text-[11px] text-gray-500">Morceaux</div>
+            <div className="text-[11px] text-gray-500">Xasiidas</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-extrabold text-kurel-800">{sessions.length}</div>

@@ -15,7 +15,7 @@ export default function SongForm({ onAdd }) {
     <div className="flex gap-2 mb-4">
       <input
         className="flex-1 border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm outline-none font-sans bg-white focus:border-kurel-600 transition-colors"
-        placeholder="Nom du morceau"
+        placeholder="Nom du xasiida"
         value={name}
         onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleAdd()}

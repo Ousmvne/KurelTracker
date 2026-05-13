@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 const NAV_ITEMS = [
   { to: "/", icon: "🏠", label: "Accueil", match: (p) => p === "/" },
   { to: "/members", icon: "👥", label: "Membres", match: (p) => p.startsWith("/members") },
-  { to: "/songs", icon: "🎶", label: "Morceaux", match: (p) => p.startsWith("/songs") },
+  { to: "/songs", icon: "🎶", label: "Xasiidas", match: (p) => p.startsWith("/songs") },
   { to: "/new-session", icon: "📋", label: "Séance", match: (p) => p.startsWith("/new-session") || p.startsWith("/session") },
   { to: "/stats", icon: "📊", label: "Stats", match: (p) => p.startsWith("/stats") },
 ];

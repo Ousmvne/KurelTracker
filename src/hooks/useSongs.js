@@ -20,12 +20,12 @@ export function useSongs(groupId, setSongs, songs, sessions, setSessions, setAtt
     );
 
     if (error) {
-      showToast("Erreur lors de l'ajout du morceau");
+      showToast("Erreur lors de l'ajout du xasiida");
       return;
     }
     if (data) {
       setSongs((prev) => [...prev, data]);
-      showToast("Morceau ajouté ✓");
+      showToast("Xasiida ajouté ✓");
     }
   }, [groupId, setSongs, showToast]);
 
@@ -49,7 +49,7 @@ export function useSongs(groupId, setSongs, songs, sessions, setSessions, setAtt
     setSongs((prev) => prev.filter((s) => s.id !== id));
     setSessions((prev) => prev.filter((s) => s.song_id !== id));
     setAttendance((prev) => prev.filter((a) => !removedSessionIds.includes(a.session_id)));
-    showToast("Morceau supprimé");
+      showToast("Xasiida supprimé");
   }, [songs, sessions, setSongs, setSessions, setAttendance, showToast]);
 
   const updateSongAudio = useCallback(async (songId, audioUrl) => {
