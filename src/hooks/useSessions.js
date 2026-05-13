@@ -3,10 +3,10 @@ import { supabase } from "../lib/supabase";
 import { safeQuery, today, ATTENDANCE_CYCLE } from "../lib/utils";
 
 export function useSessions(groupId, members, setSessions, setAttendance, showToast) {
-  const createSession = useCallback(async (songId) => {
+  const createSession = useCallback(async (selectedSongIds) => {
     const { data: session, error } = await safeQuery(() =>
       supabase.from("sessions")
-        .insert({ song_id: songId, date: today(), group_id: groupId })
+        .insert({ date: today(), group_id: groupId })
         .select().single()
     );
 
@@ -15,7 +15,14 @@ export function useSessions(groupId, members, setSessions, setAttendance, showTo
       return null;
     }
 
-    const rows = members.map((m) => ({ session_id: session.id, member_id: m.id, status: "absent" }));
+    // One attendance row per member × per selected xasiida
+    const rows = [];
+    for (const m of members) {
+      for (const songId of selectedSongIds) {
+        rows.push({ session_id: session.id, member_id: m.id, song_id: songId, status: "absent" });
+      }
+    }
+
     const { data: newAtt } = await safeQuery(() =>
       supabase.from("attendance").insert(rows).select()
     );
@@ -40,14 +47,15 @@ export function useSessions(groupId, members, setSessions, setAttendance, showTo
     showToast("Séance supprimée");
   }, [setSessions, setAttendance, showToast]);
 
-  const toggleAttendance = useCallback(async (sessionId, memberId, currentAttendance) => {
-    const att = currentAttendance.find((a) => a.session_id === sessionId && a.member_id === memberId);
+  const toggleAttendance = useCallback(async (sessionId, memberId, songId, currentAttendance) => {
+    const att = currentAttendance.find((a) =>
+      a.session_id === sessionId && a.member_id === memberId && a.song_id === songId
+    );
 
     if (!att) {
-      // Member was added after this session — no row exists yet, create it as "present"
       const { data: newAtt, error } = await safeQuery(() =>
         supabase.from("attendance")
-          .insert({ session_id: sessionId, member_id: memberId, status: "present" })
+          .insert({ session_id: sessionId, member_id: memberId, song_id: songId, status: "present" })
           .select().single()
       );
       if (!error && newAtt) setAttendance((prev) => [...prev, newAtt]);
@@ -55,11 +63,9 @@ export function useSessions(groupId, members, setSessions, setAttendance, showTo
     }
 
     const next = ATTENDANCE_CYCLE[(ATTENDANCE_CYCLE.indexOf(att.status) + 1) % ATTENDANCE_CYCLE.length];
-
     const { error } = await safeQuery(() =>
       supabase.from("attendance").update({ status: next }).eq("id", att.id)
     );
-
     if (error) return;
     setAttendance((prev) => prev.map((a) => (a.id === att.id ? { ...a, status: next } : a)));
   }, [setAttendance]);

@@ -6,14 +6,19 @@ import SessionCard from "../components/sessions/SessionCard";
 import { fmtDate } from "../lib/utils";
 
 export default function HomePage() {
-  const { group, members, songs, sessions, attendance, generateWhatsAppSummary, showToast, error: groupError } = useGroupContext();
+  const { group, members, songs, sessions, attendance, generateLastSession, generateFullBilan, showToast, error: groupError } = useGroupContext();
   const { logout, error: authError } = useAuthContext();
 
   const serverError = authError || groupError;
 
-  const handleWhatsApp = () => {
-    generateWhatsAppSummary();
+  const handleLastSession = () => {
+    generateLastSession();
     showToast("Résumé copié ✓");
+  };
+
+  const handleFullBilan = () => {
+    generateFullBilan();
+    showToast("Bilan copié ✓");
   };
 
   return (
@@ -56,20 +61,27 @@ export default function HomePage() {
           <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Séances récentes</h3>
           <div className="lg:grid lg:grid-cols-2 lg:gap-3">
           {sessions.slice(-5).reverse().map((session) => {
-            const song = songs.find((s) => s.id === session.song_id);
             const sa = attendance.filter((a) => a.session_id === session.id);
-            return <SessionCard key={session.id} session={session} song={song} attendance={sa} />;
+            return <SessionCard key={session.id} session={session} attendance={sa} />;
           })}
           </div>
         </div>
       )}
 
-      <button
-        className="w-full bg-[#25D366] text-white border-none rounded-[14px] px-5 py-3.5 text-[15px] font-bold cursor-pointer flex items-center justify-center gap-2.5 font-sans shadow-[0_4px_12px_rgba(37,211,102,0.3)] hover:brightness-105 transition-all"
-        onClick={handleWhatsApp}
-      >
-        <span className="text-xl">📱</span> Partager sur WhatsApp
-      </button>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <button
+          className="flex-1 bg-[#25D366] text-white border-none rounded-[14px] px-5 py-3.5 text-[14px] font-bold cursor-pointer flex items-center justify-center gap-2 font-sans shadow-[0_4px_12px_rgba(37,211,102,0.3)] hover:brightness-105 transition-all"
+          onClick={handleLastSession}
+        >
+          <span className="text-lg">📱</span> Dernière séance
+        </button>
+        <button
+          className="flex-1 bg-[#25D366] text-white border-none rounded-[14px] px-5 py-3.5 text-[14px] font-bold cursor-pointer flex items-center justify-center gap-2 font-sans shadow-[0_4px_12px_rgba(37,211,102,0.3)] hover:brightness-105 transition-all"
+          onClick={handleFullBilan}
+        >
+          <span className="text-lg">📊</span> Bilan complet
+        </button>
+      </div>
 
       <div className="flex justify-between mt-5 lg:hidden">
         <Link to="/settings" className="bg-transparent border-none text-gray-500 text-[13px] cursor-pointer font-sans no-underline hover:text-gray-700">

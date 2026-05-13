@@ -5,7 +5,7 @@ import ProgressBar from "../components/ui/ProgressBar";
 import EmptyState from "../components/ui/EmptyState";
 
 export default function StatsPage() {
-  const { members, songs, sessions, memberRanking, getSongStats } = useGroupContext();
+  const { members, songs, sessions, memberRanking, getSongStats, generateLastSession, generateFullBilan, showToast } = useGroupContext();
   const navigate = useNavigate();
 
   if (members.length === 0 || sessions.length === 0) {
@@ -40,6 +40,21 @@ export default function StatsPage() {
             </div>
           );
         })}
+      </div>
+
+      <div className="flex flex-col gap-2 sm:flex-row mb-6">
+        <button
+          className="flex-1 bg-[#25D366] text-white border-none rounded-[14px] px-5 py-3 text-[14px] font-bold cursor-pointer flex items-center justify-center gap-2 font-sans shadow-[0_4px_12px_rgba(37,211,102,0.3)] hover:brightness-105 transition-all"
+          onClick={() => { generateLastSession(); showToast("Résumé copié ✓"); }}
+        >
+          <span className="text-lg">📱</span> Dernière séance
+        </button>
+        <button
+          className="flex-1 bg-[#25D366] text-white border-none rounded-[14px] px-5 py-3 text-[14px] font-bold cursor-pointer flex items-center justify-center gap-2 font-sans shadow-[0_4px_12px_rgba(37,211,102,0.3)] hover:brightness-105 transition-all"
+          onClick={() => { generateFullBilan(); showToast("Bilan copié ✓"); }}
+        >
+          <span className="text-lg">📊</span> Bilan complet
+        </button>
       </div>
 
       <h3 className="text-[15px] font-bold text-gray-700 m-0 mb-2.5 font-sans">Avancement xasiidas</h3>
