@@ -42,7 +42,17 @@ export function useSessions(groupId, members, setSessions, setAttendance, showTo
 
   const toggleAttendance = useCallback(async (sessionId, memberId, currentAttendance) => {
     const att = currentAttendance.find((a) => a.session_id === sessionId && a.member_id === memberId);
-    if (!att) return;
+
+    if (!att) {
+      // Member was added after this session — no row exists yet, create it as "present"
+      const { data: newAtt, error } = await safeQuery(() =>
+        supabase.from("attendance")
+          .insert({ session_id: sessionId, member_id: memberId, status: "present" })
+          .select().single()
+      );
+      if (!error && newAtt) setAttendance((prev) => [...prev, newAtt]);
+      return;
+    }
 
     const next = ATTENDANCE_CYCLE[(ATTENDANCE_CYCLE.indexOf(att.status) + 1) % ATTENDANCE_CYCLE.length];
 

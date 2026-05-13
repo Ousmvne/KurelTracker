@@ -61,7 +61,7 @@ export function useStats(members, songs, sessions, attendance, group) {
 
     text += `\n_Généré par Kurel Tracker_`;
     navigator.clipboard?.writeText(text);
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
   }, [group, members, songs, sessions, attendanceMap, getMemberStats, getSongStats]);
 
   const getSongDetailedStats = useCallback((songId) => {

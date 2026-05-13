@@ -6,11 +6,14 @@ export function useGroupData(groupId) {
   const [songs, setSongs] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [attendance, setAttendance] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
-    if (!groupId) return;
+    if (!groupId) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     setError(null);
 
@@ -21,10 +24,15 @@ export function useGroupData(groupId) {
         supabase.from("sessions").select("*").eq("group_id", groupId).order("date"),
       ]);
 
+      if (mRes.error || sRes.error || ssRes.error) {
+        throw new Error(mRes.error?.message || sRes.error?.message || ssRes.error?.message);
+      }
+
       const sessionIds = (ssRes.data || []).map((s) => s.id);
       let attData = [];
       if (sessionIds.length > 0) {
-        const { data } = await supabase.from("attendance").select("*").in("session_id", sessionIds);
+        const { data, error: attErr } = await supabase.from("attendance").select("*").in("session_id", sessionIds);
+        if (attErr) throw new Error(attErr.message);
         attData = data || [];
       }
 

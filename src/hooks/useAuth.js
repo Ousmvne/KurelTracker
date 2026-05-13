@@ -42,10 +42,13 @@ export function useAuth() {
         return;
       }
 
-      // Check if email matches an unlinked member
-      const { data: matchingMember, error: matchErr } = await supabase
-        .from("members").select("*, groups(*)").eq("email", u.email).is("user_id", null).maybeSingle();
+      // Check if email matches an unlinked member.
+      // We fetch all matches: if multiple groups have the same email, auto-linking
+      // to an arbitrary one would put the user in the wrong group.
+      const { data: matchingMembers, error: matchErr } = await supabase
+        .from("members").select("*, groups(*)").eq("email", u.email).is("user_id", null);
       if (matchErr) throw new Error(matchErr.message);
+      const matchingMember = matchingMembers?.length === 1 ? matchingMembers[0] : null;
       if (matchingMember) {
         await supabase.from("members").update({ user_id: u.id }).eq("id", matchingMember.id);
         setRole("member");
@@ -72,12 +75,9 @@ export function useAuth() {
   }, []);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) loadUserData(session.user);
-      else setLoading(false);
-    });
-
+    // Supabase v2 fires INITIAL_SESSION via onAuthStateChange on mount,
+    // so calling getSession() separately would invoke loadUserData twice
+    // and risk creating duplicate groups for new users.
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) loadUserData(session.user);

@@ -4,11 +4,14 @@ import HeroCard from "../components/ui/HeroCard";
 import ProgressBar from "../components/ui/ProgressBar";
 import EmptyState from "../components/ui/EmptyState";
 import SongAudioPlayer from "../components/ui/SongAudioPlayer";
+import LoadingScreen from "../components/layout/LoadingScreen";
 import { fmtDate, ATTENDANCE_CONFIG } from "../lib/utils";
 
 export default function MemberDashboardPage() {
   const { myMember, logout } = useAuthContext();
   const { group, sessions, songs, attendance } = useGroupContext();
+
+  if (!myMember) return <LoadingScreen />;
 
   const myAttendance = attendance.filter((a) => a.member_id === myMember.id);
   const totalSessions = sessions.length;
