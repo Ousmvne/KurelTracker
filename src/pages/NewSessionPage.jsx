@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGroupContext } from "../contexts/GroupContext";
 import PageHeader from "../components/layout/PageHeader";
+import { today } from "../lib/utils";
 
 export default function NewSessionPage() {
   const { songs, members, createSession, addSong } = useGroupContext();
   const navigate = useNavigate();
   const [selected, setSelected] = useState(() => new Set(songs.map((s) => s.id)));
+  const [sessionDate, setSessionDate] = useState(today());
   const [newName, setNewName] = useState("");
   const [newReps, setNewReps] = useState("10");
   const [creating, setCreating] = useState(false);
@@ -43,7 +45,7 @@ export default function NewSessionPage() {
   const handleCreate = async () => {
     if (selected.size === 0 || creating) return;
     setCreating(true);
-    const sessionId = await createSession([...selected]);
+    const sessionId = await createSession([...selected], sessionDate);
     if (sessionId) navigate(`/session/${sessionId}`);
     else setCreating(false);
   };
@@ -69,8 +71,22 @@ export default function NewSessionPage() {
     <div className="p-5 pb-20 lg:p-8 lg:pb-8">
       <PageHeader title="📋 Nouvelle Séance" />
 
+      <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 mb-4 flex items-center gap-3">
+        <span className="text-lg">📅</span>
+        <div className="flex-1">
+          <label className="text-[12px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Date de la séance</label>
+          <input
+            type="date"
+            className="w-full border-none outline-none text-sm font-semibold text-gray-800 bg-transparent font-sans"
+            value={sessionDate}
+            max={today()}
+            onChange={(e) => setSessionDate(e.target.value)}
+          />
+        </div>
+      </div>
+
       <p className="text-gray-500 text-[13px] m-0 mb-3">
-        Sélectionnez les xasiidas pratiqués aujourd'hui :
+        Sélectionnez les xasiidas pratiqués :
       </p>
 
       <div className="flex flex-col gap-2 mb-5">

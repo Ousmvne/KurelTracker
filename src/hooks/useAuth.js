@@ -61,7 +61,7 @@ export function useAuth() {
       // New user → becomes admin of a new group
       const { data: newGroup, error: groupErr } = await supabase
         .from("groups")
-        .insert({ name: "Mon Kurel", start_date: today(), admin_id: u.id })
+        .insert({ name: "Mon Kurél", start_date: today(), admin_id: u.id })
         .select().single();
       if (groupErr) throw new Error(groupErr.message);
       setRole("admin");

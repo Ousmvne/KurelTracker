@@ -3,10 +3,10 @@ import { supabase } from "../lib/supabase";
 import { safeQuery, today, ATTENDANCE_CYCLE } from "../lib/utils";
 
 export function useSessions(groupId, members, setSessions, setAttendance, showToast) {
-  const createSession = useCallback(async (selectedSongIds) => {
+  const createSession = useCallback(async (selectedSongIds, date) => {
     const { data: session, error } = await safeQuery(() =>
       supabase.from("sessions")
-        .insert({ date: today(), group_id: groupId })
+        .insert({ date: date || today(), group_id: groupId })
         .select().single()
     );
 

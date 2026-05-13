@@ -4,12 +4,17 @@ const STEPS = [
   {
     icon: "🎵",
     title: "Bienvenue sur Kurel Tracker",
-    desc: "Suivez la présence de votre groupe à chaque xasiida, séance après séance. Ce guide rapide vous explique comment démarrer.",
+    desc: "Suivez la présence de votre Kurél à chaque xasiida, séance après séance. Ce guide rapide vous explique comment démarrer.",
+  },
+  {
+    icon: "⚙️",
+    title: "Nommez votre Kurél",
+    desc: "Votre Kurél a été créé avec le nom « Mon Kurél » par défaut. Rendez-vous dans ⚙️ Paramètres pour lui donner son vrai nom et définir la date de début des répétitions.",
   },
   {
     icon: "👥",
     title: "Ajoutez vos membres",
-    desc: "Dans la section Membres, ajoutez chaque participant. Vous pouvez renseigner leur email pour qu'ils puissent se connecter et voir leurs stats.",
+    desc: "Dans la section Membres, ajoutez chaque participant de votre Kurél. Vous pouvez renseigner leur email pour qu'ils puissent se connecter et voir leurs stats.",
   },
   {
     icon: "🎶",
@@ -19,7 +24,7 @@ const STEPS = [
   {
     icon: "📋",
     title: "Créez une séance",
-    desc: "Appuyez sur Nouvelle Séance, cochez les xasiidas pratiqués ce jour-là. Vous pouvez aussi ajouter un nouveau xasiida directement depuis cette page.",
+    desc: "Appuyez sur Nouvelle Séance, choisissez la date (utile pour saisir des séances passées), cochez les xasiidas pratiqués et créez. Vous pouvez ajouter un nouveau xasiida à la volée.",
   },
   {
     icon: "✅",

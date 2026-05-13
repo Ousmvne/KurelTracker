@@ -31,7 +31,7 @@ export default function HomePage() {
 
       <HeroCard
         icon="🎵"
-        title={group?.name || "Mon Kurel"}
+        title={group?.name || "Mon Kurél"}
         subtitle={`Depuis le ${fmtDate(group?.start_date)} • ${members.length} membres • ${sessions.length} séances`}
       />
 
