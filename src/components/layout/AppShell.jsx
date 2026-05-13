@@ -27,7 +27,8 @@ function AppShellInner() {
           {toast && <Toast message={toast} />}
           <Outlet />
           <footer className="text-center text-[10px] text-gray-400 py-3 pb-24 lg:pb-6 select-none">
-            © {new Date().getFullYear()} Ousmane SEYE — Kurel Tracker
+            <p className="m-0">© {new Date().getFullYear()} Kurel Tracker - Tous droits réservés</p>
+            <p className="m-0 mt-0.5">Ousmane SEYE</p>
           </footer>
         </div>
       </main>
