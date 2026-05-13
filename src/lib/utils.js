@@ -16,7 +16,7 @@ export const ATTENDANCE_CYCLE = ["absent", "present", "vocal"];
 
 /**
  * Wraps a Supabase query with consistent error handling.
- * Returns { data, error } — never throws.
+ * Returns { data, error } - never throws.
  */
 export async function safeQuery(queryFn) {
   try {

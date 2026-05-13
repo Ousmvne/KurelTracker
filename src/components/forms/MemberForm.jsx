@@ -30,7 +30,7 @@ export default function MemberForm({ onAdd }) {
       </div>
       <input
         className="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm outline-none font-sans bg-white mt-1.5 box-border focus:border-kurel-600 transition-colors"
-        placeholder="Email du membre (optionnel — pour lier son compte)"
+        placeholder="Email du membre (optionnel - pour lier son compte)"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}

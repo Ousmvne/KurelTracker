@@ -87,7 +87,7 @@ export function useStats(members, songs, sessions, attendance, group) {
     return { song, completed: totalSessions, target: song?.target_reps || 10, ranking: ranked, sessions: sessionsWithStats };
   }, [members, songs, sessions, attendance]);
 
-  // Share: last session — emoji grid per member × xasiida
+  // Share: last session - emoji grid per member × xasiida
   const generateLastSession = useCallback(() => {
     if (!group || sessions.length === 0) return;
 
@@ -97,7 +97,7 @@ export function useStats(members, songs, sessions, attendance, group) {
 
     if (sessionSongs.length === 0) return;
 
-    let text = `📊 *${group.name} — ${fmtDate(last.date)}*\n`;
+    let text = `📊 *${group.name} - ${fmtDate(last.date)}*\n`;
     text += `_${sessionSongs.map((s) => s.name).join(" · ")}_\n\n`;
 
     members.forEach((m) => {
@@ -113,11 +113,11 @@ export function useStats(members, songs, sessions, attendance, group) {
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
   }, [group, members, songs, sessions, attendance, attendanceMap]);
 
-  // Share: full bilan — per-xasiida ranking with progress bars + missed dates
+  // Share: full bilan - per-xasiida ranking with progress bars + missed dates
   const generateFullBilan = useCallback(() => {
     if (!group || sessions.length === 0) return;
 
-    let text = `📊 *${group.name} — Bilan (${sessions.length} séances)*\n\n`;
+    let text = `📊 *${group.name} - Bilan (${sessions.length} séances)*\n\n`;
 
     songs.forEach((song) => {
       const songSessionIds = new Set(

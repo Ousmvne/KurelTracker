@@ -67,7 +67,7 @@ export default function MemberDashboardPage() {
           return (
             <div key={session.id} className={`flex items-center justify-between bg-white border border-gray-200 rounded-xl px-3.5 py-3 border-l-4 ${cfg.border}`}>
               <div>
-                <div className="text-sm font-semibold text-gray-800">{song?.name || "—"}</div>
+                <div className="text-sm font-semibold text-gray-800">{song?.name || "-"}</div>
                 <div className="text-[11px] text-gray-500 mt-0.5">{fmtDate(session.date)}</div>
               </div>
               <span className={`${cfg.bg} ${cfg.color} px-3 py-1 rounded-lg text-[13px] font-semibold`}>

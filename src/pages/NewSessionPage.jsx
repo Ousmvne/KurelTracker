@@ -109,7 +109,7 @@ export default function NewSessionPage() {
         ))}
 
         {songs.length === 0 && (
-          <p className="text-gray-400 text-sm text-center py-3">Aucun xasiida encore — ajoutez-en un ci-dessous.</p>
+          <p className="text-gray-400 text-sm text-center py-3">Aucun xasiida encore - ajoutez-en un ci-dessous.</p>
         )}
       </div>
 

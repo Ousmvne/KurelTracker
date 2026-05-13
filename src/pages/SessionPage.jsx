@@ -82,7 +82,7 @@ export default function SessionPage() {
                       <button
                         className={`w-11 h-11 rounded-xl border-none cursor-pointer text-xl flex items-center justify-center transition-transform active:scale-90 ${cfg.bg}`}
                         onClick={() => toggleAttendance(sessionId, member.id, song.id, attendance)}
-                        title={`${member.name} — ${song.name}`}
+                        title={`${member.name} - ${song.name}`}
                       >
                         {cfg.icon}
                       </button>
